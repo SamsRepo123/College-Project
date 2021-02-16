@@ -44,4 +44,8 @@ dependencies {
     //circular image view
     implementation 'de.hdodenhof:circleimageview:3.1.0'
 
+    implementation 'com.google.firebase:firebase-analytics-ktx:17.5.0'
+    implementation 'com.google.firebase:firebase-database-ktx:19.4.0'
+
+
 }
