@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
 
 import android.widget.Toast;
@@ -50,13 +51,17 @@ public class SetupActivity extends AppCompatActivity {
    DatabaseReference mRef;
    StorageReference storageRef;
    ProgressDialog mLoadingBar;
-
+    Toolbar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setup);
         cardView = findViewById(R.id.cardView);
 
+        toolbar = findViewById(R.id.app_bar);
+        setSupportActionBar(toolbar);
+
+        getSupportActionBar().setTitle("Profile Setup");
 
         profileImageView = findViewById(R.id.profile_image);
         inputUsername = findViewById(R.id.inputUsername);

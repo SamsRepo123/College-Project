@@ -22,13 +22,13 @@ public class SplashActivity extends AppCompatActivity {
     FirebaseAuth mAuth;
     DatabaseReference mRef;
     FirebaseUser mUser;
-    Toolbar toolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        toolbar = findViewById(R.id.app_bar);
-        setSupportActionBar(toolbar);
+
+
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
         mRef = FirebaseDatabase.getInstance().getReference().child("Users");
