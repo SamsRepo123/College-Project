@@ -67,9 +67,10 @@ public class FindFriendActivity extends AppCompatActivity {
                     holder.username.setText(model.getUsername());
                     holder.bio_f.setText(model.getBio());
                 }
-                else{
+                else {
                     holder.itemView.setVisibility(View.GONE);
-                    holder.itemView.setLayoutParams(new RecyclerView.LayoutParams(0,0));
+                    holder.itemView.setLayoutParams(new RecyclerView.LayoutParams(0, 0));
+                }
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -79,7 +80,7 @@ public class FindFriendActivity extends AppCompatActivity {
                     }
                 });
                 }
-            }
+
 
             @NonNull
             @Override
