@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ChatApp">
-        <activity android:name=".ImageViewActivity"></activity>
+        <activity android:name=".ChatActivity"></activity>
+        <activity android:name=".ImageViewActivity" />
         <activity android:name=".FriendActivity" />
         <activity android:name=".ForgetPasswordActivity" />
         <activity android:name=".ViewFriendActivity" />

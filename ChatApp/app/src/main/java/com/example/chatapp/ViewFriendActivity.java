@@ -3,6 +3,7 @@ package com.example.chatapp;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.media.MediaCodecInfo;
 import android.os.Bundle;
 import android.view.View;
@@ -36,11 +37,12 @@ public class ViewFriendActivity extends AppCompatActivity {
     Button btnReq,btnDecline;
     String bio;
     String CurrentState="nothingHappen";
+    String userID;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_friend);
-        String userID = getIntent().getStringExtra("userKey");
+         userID = getIntent().getStringExtra("userKey");
 //        Toast.makeText(this,""+userID,Toast.LENGTH_SHORT).show();
         mUserRef = FirebaseDatabase.getInstance().getReference().child("Users").child(userID);
         mAuth = FirebaseAuth.getInstance();
@@ -50,6 +52,7 @@ public class ViewFriendActivity extends AppCompatActivity {
         profileImage = findViewById(R.id.profileImage);
         btnReq = findViewById(R.id.btnReq);
         btnDecline = findViewById(R.id.btnDecline);
+
         Username = findViewById(R.id.username);
         fullname = findViewById(R.id.fullname);
         loadUser();
@@ -254,7 +257,9 @@ public class ViewFriendActivity extends AppCompatActivity {
             });
         }
         if(CurrentState.equals("Friends")){
-
+            Intent intent = new Intent(ViewFriendActivity.this,ChatActivity.class);
+            intent.putExtra("OtherUserID",userID);
+            startActivity(intent);
         }
     }
 
