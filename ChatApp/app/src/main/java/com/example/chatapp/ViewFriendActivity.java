@@ -60,6 +60,50 @@ public class ViewFriendActivity extends AppCompatActivity {
             }
         });
         CheckUserExistance(userID);
+        btnDecline.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Unfriend(userID);
+            }
+        });
+    }
+
+    private void Unfriend(String userID) {
+        if(CurrentState.equals("Friends")){
+                frndRef.child(mUser.getUid()).child(userID).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                    if(task.isSuccessful()){
+                        frndRef.child(userID).child(mUser.getUid()).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if(task.isSuccessful()){
+                                    Toast.makeText(ViewFriendActivity.this,"Unfriended",Toast.LENGTH_SHORT).show();
+                                CurrentState="nothingHappen";
+                                btnReq.setText("Send Friend Request");
+                                    btnDecline.setVisibility(View.GONE);
+                                }
+                            }
+                        });
+                    }
+                    }
+                });
+    }
+        if(CurrentState.equals("he_send_pending")){
+            HashMap hashMap = new HashMap();
+            hashMap.put("status","decline");
+            ReqRef.child(userID).child(mUser.getUid()).updateChildren(hashMap).addOnCompleteListener(new OnCompleteListener() {
+                @Override
+                public void onComplete(@NonNull Task task) {
+                if(task.isSuccessful()){
+                    Toast.makeText(ViewFriendActivity.this,"Friend Request Decline",Toast.LENGTH_SHORT).show();
+                    CurrentState="he_sent_decline";
+                    btnReq.setVisibility(View.GONE);
+                    btnDecline.setVisibility(View.GONE);
+                }
+                }
+            });
+        }
     }
 
     private void CheckUserExistance(String userID) {
