@@ -356,7 +356,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(new Intent(MainActivity.this,ProfileActivity.class));
                 break;
             case R.id.friend:
-                Toast.makeText(this, "Friends", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(MainActivity.this,FriendActivity.class));
                 break;
             case R.id.find_friend:
                 startActivity(new Intent(MainActivity.this,FindFriendActivity.class));

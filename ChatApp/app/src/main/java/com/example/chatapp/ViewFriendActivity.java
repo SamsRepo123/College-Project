@@ -34,7 +34,7 @@ public class ViewFriendActivity extends AppCompatActivity {
     CircleImageView profileImage;
     TextView Username,fullname;
     Button btnReq,btnDecline;
-
+    String bio;
     String CurrentState="nothingHappen";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -231,6 +231,7 @@ public class ViewFriendActivity extends AppCompatActivity {
                     hashMap.put("status","Friends");
                     hashMap.put("username",username);
                     hashMap.put("profileImageUrl",profileImageUrl);
+                    hashMap.put("bio",bio);
                     frndRef.child(mUser.getUid()).child(userID).updateChildren(hashMap).addOnCompleteListener(new OnCompleteListener() {
                         @Override
                         public void onComplete(@NonNull Task task) {
@@ -266,6 +267,7 @@ public class ViewFriendActivity extends AppCompatActivity {
                    username=snapshot.child("username").getValue().toString();
                    firstname=snapshot.child("firstname").getValue().toString();
                    lastname=snapshot.child("lastname").getValue().toString();
+                   bio=snapshot.child("bio").getValue().toString();
                    Picasso.get().load(profileImageUrl).into(profileImage);
                    Username.setText(username);
                    fullname.setText(firstname+""+lastname);
