@@ -59,7 +59,88 @@ public class ViewFriendActivity extends AppCompatActivity {
                 PerformAction(userID);
             }
         });
+        CheckUserExistance(userID);
     }
+
+    private void CheckUserExistance(String userID) {
+        frndRef.child(mUser.getUid()).child(userID).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.exists()){
+                    CurrentState ="Friends";
+                    btnReq.setText("message");
+                    btnDecline.setText("unfriend");
+                    btnDecline.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        frndRef.child(userID).child(mUser.getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.exists()){
+                    CurrentState ="Friends";
+                    btnReq.setText("message");
+                    btnDecline.setText("unfriend");
+                    btnDecline.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        ReqRef.child(mUser.getUid()).child(userID).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+              if(snapshot.exists()){
+                  if(snapshot.child("status").getValue().toString().equals("pending")){
+                    CurrentState="I_sent_pending";
+                    btnReq.setText("Cancel Friend Request");
+                    btnDecline.setVisibility(View.GONE);
+                  }
+                  if(snapshot.child("status").getValue().toString().equals("decline")){
+                      CurrentState="I_sent_decline";
+                      btnReq.setText("Cancel Friend Request");
+                      btnDecline.setVisibility(View.GONE);
+                  }
+              }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        ReqRef.child(userID).child(mUser.getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.exists()){
+                    if(snapshot.child("status").getValue().equals("pending")){
+                        CurrentState="he_sent_pending";
+                        btnReq.setText("Accept Request");
+                        btnDecline.setText("Decline Request");
+                        btnDecline.setVisibility(View.VISIBLE);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        if(CurrentState.equals("nothingHappen")){
+            CurrentState="nothingHappen";
+            btnReq.setText("Send Friend Request");
+            btnDecline.setVisibility(View.GONE);
+        }
+     }
 
     private void PerformAction(String userID) {
         if(CurrentState.equals("nothingHappen")){
@@ -98,7 +179,7 @@ public class ViewFriendActivity extends AppCompatActivity {
             });
         }
         if(CurrentState.equals("he_sent_pending")){
-            ReqRef.child(mUser.getUid()).child(userID).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+            ReqRef.child(userID).child(mUser.getUid()).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
                    if(task.isSuccessful()){
