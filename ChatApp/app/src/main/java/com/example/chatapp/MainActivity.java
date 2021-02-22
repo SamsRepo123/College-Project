@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         toolbar = findViewById(R.id.app_bar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("TB Chats");
+        getSupportActionBar().setTitle("Home");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu);
 
@@ -138,7 +138,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 holder.timestamp.setText(timestamp);
                 holder.username.setText(model.getUsername());
                 Picasso.get().load(model.getPostImageUrl()).into(holder.postImage);
-                Picasso.get().load(model.getPostImageUrl()).into(holder.profileImage);
+                Picasso.get().load(model.getUserProfileImageUrl()).into(holder.profileImage);
                 holder.countLike(postKey, mUser.getUid(), likeRef);
                 holder.countComment(postKey, mUser.getUid(), commentRef);
                 holder.likeImage.setOnClickListener(new View.OnClickListener() {
@@ -369,9 +369,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.find_friend:
                 startActivity(new Intent(MainActivity.this,FindFriendActivity.class));
                 break;
-            case R.id.chat:
-                Toast.makeText(this, "Message", Toast.LENGTH_SHORT).show();
-                break;
+//            case R.id.chat:
+//                Toast.makeText(this, "Message", Toast.LENGTH_SHORT).show();
+//                break;
             case R.id.logout:
                 Intent intent = new Intent(MainActivity.this,LoginActivity.class);
                 startActivity(intent);

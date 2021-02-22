@@ -20,11 +20,11 @@
         android:title="Find People"
         android:icon="@drawable/ic_find_friend"/>
     </group>
-    <group android:id="@+id/Fifth">
-    <item android:id="@+id/chat"
-        android:title="Chat"
-        android:icon="@drawable/ic_chat"/>
-    </group>
+<!--    <group android:id="@+id/Fifth">-->
+<!--    <item android:id="@+id/chat"-->
+<!--        android:title="Chat"-->
+<!--        android:icon="@drawable/ic_chat"/>-->
+<!--    </group>-->
     <group android:id="@+id/Sixeth">
     <item android:id="@+id/logout"
         android:title="Logout"
