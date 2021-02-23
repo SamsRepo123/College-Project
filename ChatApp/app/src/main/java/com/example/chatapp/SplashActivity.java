@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -19,15 +20,18 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import pl.droidsonroids.gif.GifImageView;
+
 public class SplashActivity extends AppCompatActivity {
     FirebaseAuth mAuth;
     DatabaseReference mRef;
     FirebaseUser mUser;
+    ImageView imageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        imageView = findViewById(R.id.imageView);
 
 
         mAuth = FirebaseAuth.getInstance();
@@ -67,7 +71,7 @@ public class SplashActivity extends AppCompatActivity {
                 }
             };
             Handler handler = new Handler();
-        handler.postDelayed(runnable,5000);
+        handler.postDelayed(runnable,3500);
         }
 
         public void setSupportActionBar(Toolbar toolbar) {

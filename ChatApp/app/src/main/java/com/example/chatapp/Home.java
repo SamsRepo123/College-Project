@@ -10,18 +10,17 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class Home extends AppCompatActivity {
-Button btn, btn2,btn3;
+Button btn, btn2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         btn = findViewById(R.id.btn);
         btn2 = findViewById(R.id.btn2);
-        btn3 = findViewById(R.id.btn3);
-        btn.setOnClickListener(new View.OnClickListener() {
+        btn = findViewById(R.id.btn);btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent myIntent = new Intent(Home.this, MainActivity.class);
+                Intent myIntent = new Intent(Home.this, MusicPlayerActivity.class);
                 startActivity(myIntent);
 
             }
@@ -35,13 +34,6 @@ Button btn, btn2,btn3;
 
             }
         });
-        btn3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent myIntent2 = new Intent(Home.this, MainActivity.class);
-                startActivity(myIntent2);
 
-            }
-        });
     }
 }

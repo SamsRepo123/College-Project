@@ -7,8 +7,9 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="wrap_content"
         android:layout_margin="10dp"
+        app:cardBackgroundColor="#CF0BF3"
         app:cardCornerRadius="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -37,7 +38,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="18dp"
                 android:text="Username"
-                android:textColor="@color/colorAccent"
+                android:textColor="@color/teal_200"
                 android:textSize="24sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -46,11 +47,12 @@
 
             <TextView
                 android:id="@+id/Bio_F"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
                 android:text="Bio..."
+                android:textColor="@color/teal_200"
                 app:layout_constraintEnd_toEndOf="@+id/Username_F"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/Username_F"
                 app:layout_constraintTop_toBottomOf="@+id/Username_F" />
 
