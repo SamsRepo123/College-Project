@@ -52,6 +52,10 @@ dependencies {
     implementation 'com.squareup.picasso:picasso:2.71828'
 // firebase ui database
     implementation 'com.firebaseui:firebase-ui-database:7.1.1'
-
+//volly depe
+    implementation 'com.android.volley:volley:1.1.1'
+    //for message notification recieve
+//
+//    implementation 'com.google.firebase:firebase-messaging-directboot:20.2.0'
 
 }

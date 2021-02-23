@@ -21,7 +21,7 @@ public class MyViewHolder extends RecyclerView.ViewHolder {
 
     CircleImageView profileImage;
     ImageView postImage, likeImage, commentImage, sendComment;
-    TextView username, timestamp, postDes, likeCounter, commentCounter;
+    TextView username, timeAgo, postDes, likeCounter, commentCounter;
     EditText inputComment;
     public static RecyclerView recyclerViewComments;
 
@@ -31,7 +31,7 @@ public class MyViewHolder extends RecyclerView.ViewHolder {
         profileImage = itemView.findViewById(R.id.profile_image_post);
         postImage = itemView.findViewById(R.id.postImage);
         username = itemView.findViewById(R.id.profileUsernamePost);
-        timestamp = itemView.findViewById(R.id.timeAgo);
+        timeAgo = itemView.findViewById(R.id.timeAgo);
         postDes = itemView.findViewById(R.id.postDes);
         likeImage = itemView.findViewById(R.id.likeImage);
         commentImage = itemView.findViewById(R.id.commentImage);

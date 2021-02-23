@@ -16,6 +16,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.chatapp.utils.Chat;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
@@ -30,7 +37,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.HashMap;
+import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -46,14 +57,17 @@ public class ChatActivity extends AppCompatActivity {
     FirebaseAuth mAuth;
     FirebaseUser mUser;
     String OtherUsername,OtherUserProfileImageLink,OtherUserStatus;
-    String myProfileImageLink;
+    String myProfileImageLink ;//, username;
     FirebaseRecyclerOptions<Chat>option;
     FirebaseRecyclerAdapter<Chat,MyChatViewHolder>adapter;
+    String URL ="https://fcm.googleapis.com/fcm/send";
+    RequestQueue requestQueue;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
         OtherUserID =getIntent().getStringExtra("OtherUserID");
+        requestQueue = Volley.newRequestQueue(this);
         toolbar = findViewById(R.id.app_bar);
         setSupportActionBar(toolbar);
         inputMessage =  findViewById(R.id.inputMessage);
@@ -86,6 +100,9 @@ public class ChatActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 myProfileImageLink = snapshot.child("profileImage").getValue().toString();
+//                username = snapshot.child("username").getValue().toString();
+
+
             }
 
             @Override
@@ -155,8 +172,9 @@ public class ChatActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task task) {
                        if(task.isSuccessful()){
+                           sendNotification(message);
                            inputMessage.setText(null);
-                           Toast.makeText(ChatActivity.this,"message sent", Toast.LENGTH_SHORT).show();
+                         //  Toast.makeText(ChatActivity.this,"message sent", Toast.LENGTH_SHORT).show();
                        }
                         }
                     });
@@ -164,6 +182,48 @@ public class ChatActivity extends AppCompatActivity {
                 }
             });
         }
+    }
+
+    private void sendNotification(String message) {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("to", "/topics/"+OtherUserID);
+            JSONObject jsonObject1 = new JSONObject();
+            jsonObject1.put("title","Message from"+OtherUsername);
+            jsonObject1.put("body",message);
+//            JSONObject jsonObject2 = new JSONObject();
+//            jsonObject2.put("userID",mUser.getUid());
+//            jsonObject2.put("type","message");
+//            jsonObject.put("notification",jsonObject1);
+//            jsonObject.put("data",jsonObject2);
+            JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST,URL, jsonObject, new Response.Listener<JSONObject>() {
+
+
+                @Override
+                public void onResponse(JSONObject response) {
+
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+
+                }
+            }){
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                   Map<String , String> map = new HashMap<>();
+                   map.put("content-type","application/json");
+                   map.put("authorization","key=AAAA6iFsAjQ:APA91bFJ7Z0bFV-Rl8B3EOZ07dQFe3nV11m5h8AK_NlYJjOCO8sNsBqHt6dBNmJCJCBmkmT2JrGayswTeoWgfGAQcP8kQwT6KWuiIO93sH50he_OaDHTBKcmZUJPQqMhXAXklliCr98S\t\n" +
+                           "Sender ID \n");
+                    return map;
+                }
+            };
+            requestQueue.add(request);
+        }
+       catch(JSONException e) {
+        e.printStackTrace();
+        }
+
     }
 
     private void LoadOtherUser() {

@@ -39,6 +39,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+//import com.google.firebase.messaging.FirebaseMessaging;
+//import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -48,6 +50,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.TimeZone;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -99,7 +102,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mUserRef = FirebaseDatabase.getInstance().getReference().child("Users");
         postRef = FirebaseDatabase.getInstance().getReference().child("Posts");
         likeRef = FirebaseDatabase.getInstance().getReference().child("Likes");
-
+//        FirebaseMessaging.getInstance().subscribeToTopic(mUser.getUid());
         commentRef = FirebaseDatabase.getInstance().getReference().child("commented");
         postImageRef = FirebaseStorage.getInstance().getReference().child("PostedImages");
         drawerLayout = findViewById(R.id.drawerLayout);
@@ -134,8 +137,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             protected void onBindViewHolder(@NonNull MyViewHolder holder, int position, @NonNull Post model) {
                 String postKey = getRef(position).getKey();
                 holder.postDes.setText(model.getPostDes());
-                String timestamp = calculateTimeStamp(model.getDate());
-                holder.timestamp.setText(timestamp);
+                String timeAgo = calculateTimeAgo(model.getDate());
+                holder.timeAgo.setText(timeAgo);
                 holder.username.setText(model.getUsername());
                 Picasso.get().load(model.getPostImageUrl()).into(holder.postImage);
                 Picasso.get().load(model.getUserProfileImageUrl()).into(holder.profileImage);
@@ -239,18 +242,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
-    private String calculateTimeStamp(String date) {
-        java.text.SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
+    private String calculateTimeAgo(String date) {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
+
         try {
             long time = sdf.parse(date).getTime();
             long now = System.currentTimeMillis();
             CharSequence ago =
                     DateUtils.getRelativeTimeSpanString(time, now, DateUtils.MINUTE_IN_MILLIS);
-            return ago + "";
+            return ago+"";
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        return null;
+        return "";
     }
 
     @Override
